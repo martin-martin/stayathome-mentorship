@@ -29,7 +29,7 @@ try:
     if os.environ['DEBUG'] == 'True':
         DEBUG = True
     else:
-        DEBug = False
+        DEBUG = False
 except KeyError:
     DEBUG = False
 
