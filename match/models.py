@@ -6,7 +6,7 @@ class Student(models.Model):
     email = models.CharField(max_length=100)
     info = models.TextField()
     timezone = models.IntegerField()
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
     mentor = models.ForeignKey('Mentor', on_delete=models.SET_NULL, default=None, null=True, blank=True)
     has_mentor = models.BooleanField(default=False)
 
@@ -22,7 +22,7 @@ class Mentor(models.Model):
     weeks = models.IntegerField()
     students = models.IntegerField()
     current_students = models.IntegerField(default=0)
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def has_capacity(self):
         return self.current_students < self.students

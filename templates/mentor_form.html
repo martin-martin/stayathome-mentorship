@@ -1,0 +1,142 @@
+<!--<form action="https://send.pageclip.co/1mAanPqdomEcI3zbN03rp7chzgXmvkxO/mentor-applications" class="pageclip-form" method="post">-->
+<form action="{% url 'add_mentor' %}" class="pageclip-form" method="post">
+    {% csrf_token %}
+
+    <div class="field">
+        <label class="label" for="name">Name</label>
+        <div class="control">
+            <input class="input is-success" type="text" name="name" id="name" placeholder="Wanda Halp" required/>
+        </div>
+        <p class="help">What can we call you?</p>
+    </div>
+
+    <div class="field">
+        <label class="label" for="email">Email</label>
+        <div class="control">
+            <input class="input is-success" type="email" name="email" id="email" placeholder="your@email.com" required/>
+        </div>
+        <p class="help">Your email, for establishing contact. We won't use your email for anything else.</p>
+    </div>
+
+    <div class="field">
+        <label class="label" for="info">Info</label>
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea is-success" name="info" id="info"
+                          placeholder="Worked in IT for many years. I wanna help! Evenings work best." required></textarea>
+            </div>
+        </div>
+        <p class="help">Some notes on your background and why you're applying.</p>
+    </div>
+
+    <div class="field">
+        <p class="label">Tech Stack</p>
+        <div>
+            <input type="checkbox" name="tech[backend]" id="back-end"/>
+            <label htmlFor="back-end">Back-End</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tech[frontend]" id="front-end"/>
+            <label htmlFor="front-end">Front-End</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tech[networking]" id="networking"/>
+            <label htmlFor="networking">IT/Networking</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tech[databases]" id="databases"/>
+            <label htmlFor="databases">Databases</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tech[design]" id="design"/>
+            <label htmlFor="design">Design</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tech[other]" id="other"/>
+            <label htmlFor="other">Other</label>
+        </div>
+
+        <p class="help">What topics do you feel comfortable mentoring a beginner about?</p>
+    </div>
+
+    <div class="field">
+        <label class="label" for="details">Details (optional)</label>
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea is-success" name="details" id="details" rows="2"
+                          placeholder="Comfortable teaching Python, HTML, CSS. Some JavaScript for beginners."></textarea>
+            </div>
+        </div>
+        <p class="help">Give some more detail on the tech stack you're familiar with.</p>
+    </div>
+
+    <div class="field">
+        <label class="label" for="students">Students</label>
+        <div class="control">
+            <div class="select is-success">
+                <select name="students" id="students" required>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="99">more...</option>
+                </select>
+            </div>
+        </div>
+        <p class="help">How many students can you mentor? Expect to spend about 1 hour per student per week.</p>
+    </div>
+
+    <div class="field">
+        <label class="label" for="weeks">Time Span</label>
+        <div class="control">
+            <div class="select is-success">
+                <select name="weeks" id="weeks" required>
+                    <option value="4" selected>4 weeks</option>
+                    <option value="6">6 weeks</option>
+                    <option value="8">8 weeks</option>
+                    <option value="99">until the curve is flat...</option>
+                </select>
+            </div>
+        </div>
+        <p class="help">How many weeks can you commit to?</p>
+    </div>
+
+    <div class="field">
+        <label for="timezone" class="label">Timezone</label>
+        <div class="control">
+            <div class="select is-success">
+                <select name="timezone" id="timezone" required>
+                    <option value="-12">UTC-12</option>
+                    <option value="-11">UTC-11</option>
+                    <option value="-10">UTC-10</option>
+                    <option value="-9">UTC-9</option>
+                    <option value="-8">UTC-8</option>
+                    <option value="-7">UTC-7</option>
+                    <option value="-6">UTC-6</option>
+                    <option value="-5">UTC-5</option>
+                    <option value="-4">UTC-4</option>
+                    <option value="-3">UTC-3</option>
+                    <option value="-2">UTC-2</option>
+                    <option value="-1">UTC-1</option>
+                    <option value="0" selected>UTC</option>
+                    <option value="1">UTC+1</option>
+                    <option value="2">UTC+2</option>
+                    <option value="3">UTC+3</option>
+                    <option value="4">UTC+4</option>
+                    <option value="5">UTC+5</option>
+                    <option value="6">UTC+6</option>
+                    <option value="7">UTC+7</option>
+                    <option value="8">UTC+8</option>
+                    <option value="9">UTC+9</option>
+                    <option value="10">UTC+10</option>
+                    <option value="11">UTC+11</option>
+                    <option value="12">UTC+12</option>
+                </select>
+            </div>
+        </div>
+        <p class="help">Your timezone helps us match you better with students.</p>
+    </div>
+
+    <button type="submit" class="pageclip-form__submit button is-success is-large">
+        <span>Submit Application</span>
+    </button>
+</form>

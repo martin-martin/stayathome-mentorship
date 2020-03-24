@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <article class="message is-success">
+            <div class="message-header">
+                <p>Solidarity in the time of <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" target="_blank" class="is-link">COVID-19</a></p>
+                <!--                <button class="delete" aria-label="delete"></button>-->
+            </div>
+            <div class="message-body">
+
+                {% include 'intro.html' %}
+
+                <p class="content">
+                    <strong>Help Others Learn Tech Skills:</strong> Simply having technical skills will not solve the
+                    economic and societal problems we are currently facing, but it can help some people to put themselves
+                    in a more stable position, and gives us all the opportunity to help build more sustainable systems for our communities.
+                    In terms of financial stability, tech jobs are still some of the
+                    best paid and most in-demand positions in many places around the world, and they can give many
+                    people the opportunity to work remotely. Being able to create value remotely and getting paid even
+                    during a situation like the current COVID-19 lock-downs is a privilege that we would like
+                    to make as available as possible to affected workers.</p>
+
+                <p class="content">
+                    <strong>Your Call:</strong> With giving just 1 hour of your time per week per student, your mentorship can
+                    have a positive impact in someone's life.
+                    Learning to code is not easy and we know from experience that having a mentor to talk things over with on a
+                    regular basis can make all the difference. This is where you come in. You can help someone get started in tech
+                    by being at their side for 1 month. That's right, 4 hours of your time can help change someone’s life for the better.
+                    <strong><a href="https://github.com/CodingNomads/stayathome-mentorship/blob/master/README.md" target="_blank">Click here for more info</a></strong>.</p>
+            </div>
+        </article>
+        <div class="columns">
+            <div class="column">
+                <ul class="content">
+                    <li>✅ You know some coding</li>
+                    <li>✅ You can spare 1 hour of your time per week</li>
+                    <li>✅ You want to help people affected by COVID-19</li>
+                </ul>
+            </div>
+            <div class="column">
+                <p class="content has-text-right">📚 I don't know programming but want to learn</p>
+                <div class="buttons is-right">
+                    <a href="{% url 'student' %}" class="button">Apply As A Student</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="title is-2">Become a temporary Pro-Bono Mentor</h2>
+        <p class="content">Please enter your info and availability in this form and we will connect you with a learner.</p>
+
+        {% include 'mentor_form.html' %}
+
+    </div>
+</section>
+
+{% endblock %}

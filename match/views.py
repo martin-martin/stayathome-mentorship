@@ -1,7 +1,16 @@
+from django.shortcuts import render
 from .models import Student, Mentor
 from rest_framework import viewsets, generics
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer
+
+
+def show_mentor_form(request):
+    return render(request, 'mentors.html', {'color': 'success'})
+
+
+def show_student_form(request):
+    return render(request, 'students.html', {'color': 'info'})
 
 
 # two public-facing POST endpoints to catch the form submissions

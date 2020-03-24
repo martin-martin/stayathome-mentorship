@@ -25,13 +25,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'devlopment')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-try:
-    if os.environ['DEBUG'] == 'True':
-        DEBUG = True
-    else:
-        DEBUG = False
-except KeyError:
-    DEBUG = False
+DEBUG = True
+# try:
+#     if os.environ['DEBUG'] == 'True':
+#         DEBUG = True
+#     else:
+#         DEBUG = False
+# except KeyError:
+#     DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -65,7 +66,7 @@ ROOT_URLCONF = 'mentor_match.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,6 +128,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
+# TODO: double-check whether the 'static' folder in project root needs to be named 'staticfiles' instead
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
