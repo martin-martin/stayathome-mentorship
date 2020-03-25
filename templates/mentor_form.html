@@ -15,7 +15,7 @@
         <div class="control">
             <input class="input is-success" type="email" name="email" id="email" placeholder="your@email.com" required/>
         </div>
-        <p class="help">Your email, for establishing contact. We won't use your email for anything else.</p>
+        <p class="help">Your email, for establishing contact. <strong>We won't use your email for anything else.</strong></p>
     </div>
 
     <div class="field">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="field">
-        <p class="label">Tech Stack</p>
+        <p class="label">What concepts/technologies would you be comfortable mentoring?</p>
         <div>
             <input type="checkbox" name="tech[backend]" id="back-end"/>
             <label htmlFor="back-end">Back-End</label>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="field">
-        <label class="label" for="details">Details (optional)</label>
+        <label class="label" for="details">Please provide more info about your skills/experience? (optional)</label>
         <div class="field">
             <div class="control">
                 <textarea class="textarea is-success" name="details" id="details" rows="2"
@@ -71,7 +71,7 @@
     </div>
 
     <div class="field">
-        <label class="label" for="students">Students</label>
+        <label class="label" for="students">How many students would you like to work with?</label>
         <div class="control">
             <div class="select is-success">
                 <select name="students" id="students" required>
@@ -82,11 +82,11 @@
                 </select>
             </div>
         </div>
-        <p class="help">How many students can you mentor? Expect to spend about 1 hour per student per week.</p>
+        <p class="help">Expect to spend about 1 hour per student per week.</p>
     </div>
 
     <div class="field">
-        <label class="label" for="weeks">Time Span</label>
+        <label class="label" for="weeks">How many weeks can you commit to volunteering?</label>
         <div class="control">
             <div class="select is-success">
                 <select name="weeks" id="weeks" required>
@@ -97,11 +97,10 @@
                 </select>
             </div>
         </div>
-        <p class="help">How many weeks can you commit to?</p>
     </div>
 
     <div class="field">
-        <label for="timezone" class="label">Timezone</label>
+        <label for="timezone" class="label">What is your timezone?</label>
         <div class="control">
             <div class="select is-success">
                 <select name="timezone" id="timezone" required>
@@ -134,6 +133,19 @@
             </div>
         </div>
         <p class="help">Your timezone helps us match you better with students.</p>
+    </div>
+
+    <div class="field">
+        <label for="available-time" class="label">Best time of day for mentor meetings</label>
+        <div class="control">
+            <div class="select is-success">
+                <select name="available-time" id="available-time" required>
+                    <option value="morning">Morning</option>
+                    <option value="mid-day">Mid-day</option>
+                    <option value="evening">Evening</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <button type="submit" class="pageclip-form__submit button is-success is-large">

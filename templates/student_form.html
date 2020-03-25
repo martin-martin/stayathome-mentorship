@@ -15,11 +15,11 @@
         <div class="control">
             <input class="input is-info" type="email" name="email" id="email" placeholder="your@email.com" required/>
         </div>
-        <p class="help">Your email, for establishing contact. We won't use your email for anything else.</p>
+        <p class="help">Your email, for establishing contact. <strong>We won't use your email for anything else.</strong></p>
     </div>
 
     <div class="field">
-        <label class="label" for="info">Info</label>
+        <label class="label" for="info">Describe your employment situation</label>
         <div class="field">
             <div class="control">
                 <textarea class="textarea is-info" name="info" id="info"
@@ -30,7 +30,31 @@
     </div>
 
     <div class="field">
-        <p class="label">Interests</p>
+        <p class="label">Did you recently lose your job due to the Covid-19 Pandemic?</p>
+        <div>
+            <input type="checkbox" name="lost_job[yes]" id="lost-job-yes"/>
+            <label htmlFor="lost-job-yes">Yes</label>
+        </div>
+        <div>
+            <input type="checkbox" name="lost_job[no]" id="lost-job-no"/>
+            <label htmlFor="lost-job-no">No</label>
+        </div>
+    </div>
+
+    <div class="field">
+        <p class="label">Are you committed to staying home and flattening the curve?</p>
+        <div>
+            <input type="checkbox" name="stay_home[yes]" id="stay-home-yes"/>
+            <label htmlFor="stay-home-yes">Yes</label>
+        </div>
+        <div>
+            <input type="checkbox" name="stay-home[no]" id="stay-home-no"/>
+            <label htmlFor="stay-home-no">No</label>
+        </div>
+    </div>
+
+    <div class="field">
+        <p class="label">What topics do you want to learn about?</p>
         <div>
             <input type="checkbox" name="tech[backend]" id="back-end"/>
             <label htmlFor="back-end">Back-End</label>
@@ -56,11 +80,11 @@
             <label htmlFor="other">Other</label>
         </div>
 
-        <p class="help">What topics do you want to learn about?</p>
+        <p class="help">This helps us help you find the right direction.</p>
     </div>
 
     <div class="field">
-        <label for="timezone" class="label">Timezone</label>
+        <label for="timezone" class="label">What is your timezone</label>
         <div class="control">
             <div class="select is-info">
                 <select name="timezone" id="timezone" required>
@@ -93,6 +117,19 @@
             </div>
         </div>
         <p class="help">Your timezone helps us match you better with a mentor.</p>
+    </div>
+
+    <div class="field">
+        <label for="available-time" class="label">Best time of day for mentor meetings</label>
+        <div class="control">
+            <div class="select is-info">
+                <select name="available-time" id="available-time" required>
+                    <option value="morning">Morning</option>
+                    <option value="mid-day">Mid-day</option>
+                    <option value="evening">Evening</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <button type="submit" class="pageclip-form__submit button is-info is-large">
