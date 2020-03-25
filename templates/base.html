@@ -23,7 +23,11 @@
 </head>
 <body>
 
+    {% if color %}
 <section class="hero is-{{ color }} is-bold">
+    {% else %}
+<section class="hero is-dark is-bold">
+    {% endif %}
     <div class="hero-body">
         <div class="columns">
             <div class="column is-three-quarters">

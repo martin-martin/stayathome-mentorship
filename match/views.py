@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
+from django.http import HttpResponseRedirect
 from .models import Student, Mentor
 from rest_framework import viewsets, generics
 from rest_framework import permissions
@@ -13,15 +14,48 @@ def show_student_form(request):
     return render(request, 'students.html', {'color': 'info'})
 
 
+def show_success_page(request):
+    return render(request, 'success.html', {'color': 'primary'})
+
+
 # two public-facing POST endpoints to catch the form submissions
-class StudentCreateView(generics.CreateAPIView):
-    """Public POST API-endpoint that creates a new Student entry."""
+class AddStudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    http_method_names = ['post', 'head']
+
+    def create(self, request, *args, **kwargs):
+        response = super(AddStudentViewSet, self).create(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('success'))
+
+    def perform_create(self, serializer):
+        serializer.partial = True
+        serializer.save()
 
 
-class MentorCreateView(generics.CreateAPIView):
-    """Public POST API-endpoint that creates a new Mentor entry."""
+class AddMentorViewSet(viewsets.ModelViewSet):
+    queryset = Mentor.objects.all()
     serializer_class = MentorSerializer
+    http_method_names = ['post', 'head']
+
+    def create(self, request, *args, **kwargs):
+        response = super(AddMentorViewSet, self).create(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('success'))
+
+    def perform_create(self, serializer):
+        serializer.partial = True
+        serializer.save()
+
+
+# class StudentCreateView(generics.CreateAPIView):
+#     """Public POST API-endpoint that creates a new Student entry."""
+#     serializer_class = StudentSerializer
+#     template_name = 'intro.html'
+#
+#
+# class MentorCreateView(generics.CreateAPIView):
+#     """Public POST API-endpoint that creates a new Mentor entry."""
+#     serializer_class = MentorSerializer
 
 
 # the following endpoints require authentication
