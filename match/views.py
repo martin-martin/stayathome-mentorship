@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from .models import Student, Mentor
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer
 
@@ -45,17 +45,6 @@ class AddMentorViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.partial = True
         serializer.save()
-
-
-# class StudentCreateView(generics.CreateAPIView):
-#     """Public POST API-endpoint that creates a new Student entry."""
-#     serializer_class = StudentSerializer
-#     template_name = 'intro.html'
-#
-#
-# class MentorCreateView(generics.CreateAPIView):
-#     """Public POST API-endpoint that creates a new Mentor entry."""
-#     serializer_class = MentorSerializer
 
 
 # the following endpoints require authentication
