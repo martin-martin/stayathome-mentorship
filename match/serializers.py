@@ -6,7 +6,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['name', 'email', 'info', 'skill_set', 'timezone', 'daytime', 'timestamp',
+        fields = ['name', 'email', 'info', 'skills', 'timezone', 'daytime', 'timestamp',
                   'lost_job']
 
 
@@ -14,7 +14,7 @@ class MentorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['name', 'email', 'info', 'skill_set', 'timezone', 'daytime', 'timestamp',
+        fields = ['name', 'email', 'info', 'skills', 'timezone', 'daytime', 'timestamp',
                   'details', 'students', 'weeks']
 
 
