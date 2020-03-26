@@ -2,7 +2,7 @@ from .models import Student, Mentor, Skill
 from rest_framework import serializers
 
 
-class StudentSerializer(serializers.HyperlinkedModelSerializer):
+class StudentSerializer(serializers.HyperlinkedModelSerializer):  # ModelSerializer might fix the hardcoded stuff
 
     class Meta:
         model = Student
@@ -10,7 +10,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
                   'lost_job']
 
 
-class MentorSerializer(serializers.HyperlinkedModelSerializer):
+class MentorSerializer(serializers.HyperlinkedModelSerializer):  # ModelSerializer might fix the hardcoded stuff
 
     class Meta:
         model = Mentor
@@ -18,7 +18,7 @@ class MentorSerializer(serializers.HyperlinkedModelSerializer):
                   'details', 'students', 'weeks']
 
 
-class SkillSerializer(serializers.HyperlinkedModelSerializer):
+class SkillSerializer(serializers.HyperlinkedModelSerializer):  # ModelSerializer might fix the hardcoded stuff
 
     class Meta:
         model = Skill
