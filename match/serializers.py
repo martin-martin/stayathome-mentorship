@@ -1,8 +1,15 @@
 from .models import Student, Mentor, Skill
 from rest_framework import serializers
 
+class SkillSerializer(serializers.ModelSerializer):
 
-class StudentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ['form_value', 'type']
+        extra_kwargs = {'url': {'view_name': 'rest_framework:skill-detail', 'lookup_field': 'form_value'}}
+
+
+class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
@@ -10,7 +17,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
                   'lost_job']
 
 
-class MentorSerializer(serializers.HyperlinkedModelSerializer):
+class MentorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
@@ -18,8 +25,3 @@ class MentorSerializer(serializers.HyperlinkedModelSerializer):
                   'details', 'students', 'weeks']
 
 
-class SkillSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Skill
-        fields = ['form_value', 'type']

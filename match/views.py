@@ -101,4 +101,9 @@ class SkillViewSet(viewsets.ModelViewSet):
     """
     queryset = Skill.objects.all().order_by('form_value')
     serializer_class = SkillSerializer
+    print(dir(serializer_class))
+    print(serializer_class.url_field_name)
+    print(serializer_class.serializer_url_field)
+
+
     permission_classes = [permissions.IsAuthenticated]
