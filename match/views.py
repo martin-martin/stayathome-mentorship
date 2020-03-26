@@ -24,13 +24,13 @@ class AddStudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
     http_method_names = ['post', 'head']
 
-    def create(self, request, *args, **kwargs):
-        response = super(AddStudentViewSet, self).create(request, *args, **kwargs)
-        return HttpResponseRedirect(reverse('success'))
-
-    def perform_create(self, serializer):
-        serializer.partial = True
-        serializer.save()
+    # def create(self, request, *args, **kwargs):
+    #     response = super(AddStudentViewSet, self).create(request, *args, **kwargs)
+    #     return HttpResponseRedirect(reverse('success'))
+    #
+    # def perform_create(self, serializer):
+    #     serializer.partial = True
+    #     serializer.save()
 
 
 class AddMentorViewSet(viewsets.ModelViewSet):
