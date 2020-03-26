@@ -1,9 +1,9 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
-from .models import Student, Mentor
+from .models import Student, Mentor, Skill
 from rest_framework import viewsets
 from rest_framework import permissions
-from match.serializers import StudentSerializer, MentorSerializer
+from match.serializers import StudentSerializer, MentorSerializer, SkillSerializer
 
 
 def show_mentor_form(request):
@@ -63,4 +63,13 @@ class MentorViewSet(viewsets.ModelViewSet):
     """
     queryset = Mentor.objects.all().order_by('-timestamp')
     serializer_class = MentorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class SkillViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows skills to be viewed or edited.
+    """
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
     permission_classes = [permissions.IsAuthenticated]

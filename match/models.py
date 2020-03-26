@@ -1,44 +1,49 @@
 from django.db import models
 
 
-class Student(models.Model):
+class Person(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     info = models.TextField()
-    job = models.BooleanField(default=True)
-    flattening = models.BooleanField(default=True)
-    skills = models.ManyToManyField('Skills')
+    skill_set = models.ManyToManyField('Skill')
     timezone = models.IntegerField()
     daytime = models.CharField(max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)
-    mentor = models.ForeignKey('Mentor', on_delete=models.SET_NULL, default=None, null=True, blank=True)
-    has_mentor = models.BooleanField(default=False)
+
+
+# what about inheriting from a shared Person model
+class Student(Person):
+    lost_job = models.BooleanField(default=True)
+    current_mentor = models.ForeignKey('Mentor', on_delete=models.SET_NULL, default=None, null=True, blank=True)
+
+    def has_mentor(self):
+        if self.current_mentor:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return self.name
 
 
-class Mentor(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    info = models.TextField()
-    skills = models.ManyToManyField('Skills')
-    details = models.TextField()
+class Mentor(Person):
+    details = models.TextField(default=None, null=True, blank=True)
     students = models.IntegerField()
     weeks = models.IntegerField()
-    timezone = models.IntegerField()
-    daytime = models.CharField(max_length=10)
-    current_students = models.IntegerField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
 
     def has_capacity(self):
-        return self.current_students < self.students
+        return self.current_students() < self.students
+
+    def current_students(self):
+        """How many students are currently assigned to this mentor."""
+        return len(self.student_set.all())
 
     def __str__(self):
         return self.name
 
 
-class Skills(models.Model):
+class Skill(models.Model):
+    form_value = models.IntegerField()
     type = models.CharField(max_length=20)
 
     def __str__(self):

@@ -22,6 +22,7 @@ from match import views
 router = routers.DefaultRouter()
 router.register(r'students', views.StudentViewSet)
 router.register(r'mentors', views.MentorViewSet)
+router.register(r'skills', views.SkillViewSet)
 router.register(r'add-student', views.AddStudentViewSet)
 router.register(r'add-mentor', views.AddMentorViewSet)
 
