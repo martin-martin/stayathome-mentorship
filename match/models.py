@@ -5,7 +5,7 @@ class Person(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     info = models.TextField()
-    skills = models.ManyToManyField('Skill')
+    skills = models.ManyToManyField('Skill', null=True, blank=True)
     timezone = models.IntegerField()
     daytime = models.CharField(max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -22,6 +22,10 @@ class Student(Person):
         else:
             return False
 
+    has_mentor.admin_order_field = '-timestamp'
+    has_mentor.boolean = True
+    has_mentor.short_description = 'Has mentor?'
+
     def __str__(self):
         return self.name
 
@@ -37,6 +41,10 @@ class Mentor(Person):
     def current_students(self):
         """How many students are currently assigned to this mentor."""
         return len(self.student_set.all())
+
+    has_capacity.admin_order_field = '-timestamp'
+    has_capacity.boolean = True
+    has_capacity.short_description = 'Has capacity?'
 
     def __str__(self):
         return self.name
