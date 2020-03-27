@@ -15,7 +15,7 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 class MentorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'timezone', 'weeks', 'has_capacity')
+    list_display = ('name', 'email', 'timezone', 'weeks', 'capacity', 'has_capacity')
     list_filter = ['timezone', 'weeks', 'timestamp', 'skills']
     search_fields = ['name', 'email', 'skills']
     fieldsets = [
@@ -27,7 +27,7 @@ class MentorAdmin(admin.ModelAdmin):
 
 
 class SkillAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('type', 'form_value')
 
 
 # Register your models here.

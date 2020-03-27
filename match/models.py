@@ -42,6 +42,10 @@ class Mentor(Person):
         """How many students are currently assigned to this mentor."""
         return len(self.student_set.all())
 
+    def capacity(self):
+        """How many students can this mentor still take on?"""
+        return self.students - self.current_students()
+
     has_capacity.admin_order_field = '-timestamp'
     has_capacity.boolean = True
     has_capacity.short_description = 'Has capacity?'
