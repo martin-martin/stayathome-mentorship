@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
 from .models import Student, Mentor, Skill #, Person
 
 
@@ -45,6 +46,9 @@ class SkillAdmin(admin.ModelAdmin):
     list_display = ('type', 'form_value')
 
 
+# Remove default models we don't use
+admin.site.unregister(User)
+admin.site.unregister(Group)
 # Register your models here.
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Mentor, MentorAdmin)
