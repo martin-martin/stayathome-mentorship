@@ -16,13 +16,13 @@ class StudentInLine(admin.TabularInline):
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'timezone', 'has_mentor')
+    list_display = ('name', 'email', 'timezone', 'has_mentor', 'is_active')
     list_filter = ['timezone', 'lost_job', 'timestamp', 'skills']
     search_fields = ['name', 'email', 'skills']
     fieldsets = [
         (None, {'fields': ['name', 'email', 'info', 'current_mentor']}),
         ('Interests', {'fields': ['skills']}),
-        ('Time Info', {'fields': ['timezone', 'daytime']}),
+        ('Time Info', {'fields': ['timezone', 'daytime', 'start_date', 'end_date']}),
     ]  # omitting field 'timestamp' (for when the form was submitted) and 'lost_job'
 
 

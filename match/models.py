@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Person(models.Model):
@@ -8,7 +9,17 @@ class Person(models.Model):
     skills = models.ManyToManyField('Skill', blank=True)
     timezone = models.IntegerField()
     daytime = models.CharField(max_length=10)
+    start_date = models.DateTimeField(default=None, null=True, blank=True)
+    end_date = models.DateTimeField(default=None, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def is_active(self):
+        if self.end_date:
+            return timezone.now() < self.end_date
+        else:
+            return False
+
+    is_active.boolean = True
 
 
 # what about inheriting from a shared Person model
