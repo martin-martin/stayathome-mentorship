@@ -1,5 +1,7 @@
 import csv
 from django.http import HttpResponse
+from django.shortcuts import reverse
+from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from .models import Student, Mentor, Skill #, Person
@@ -38,7 +40,7 @@ class StudentInLine(admin.TabularInline):
 
 
 class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ('name', 'email', 'timezone', 'has_mentor', 'is_active')
+    list_display = ('name', 'email', 'timezone', 'has_mentor', 'current_mentor', 'is_active')
     list_filter = ['timezone', 'lost_job', 'timestamp', 'skills']
     search_fields = ['name', 'email', 'skills']
     fieldsets = [
@@ -51,7 +53,26 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ('name', 'email', 'timezone', 'weeks', 'capacity', 'has_capacity')
+
+    def student_display(self, obj):
+        """Displays all students associated with current mentor as a clickable string.
+
+        Student objects are separated by commas and access the Student object's change page.
+        """
+        display_text = ", ".join([
+            "<a href={}>{}</a>".format(
+                    reverse('admin:{}_{}_change'.format(obj._meta.app_label, Student._meta.model_name),
+                    args=(student.pk,)),
+                student.name)
+             for student in obj.student_set.all()
+        ])
+        if display_text:
+            return mark_safe(display_text)
+        return "-"
+
+    student_display.short_description = "Students"
+
+    list_display = ('name', 'email', 'timezone', 'weeks', 'student_display', 'capacity', 'has_capacity')
     list_filter = ['timezone', 'weeks', 'timestamp', 'skills']
     search_fields = ['name', 'email', 'skills']
 
