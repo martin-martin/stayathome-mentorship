@@ -26,6 +26,7 @@ class Person(models.Model):
 class Student(Person):
     lost_job = models.BooleanField(default=True)
     current_mentor = models.ForeignKey('Mentor', on_delete=models.SET_NULL, default=None, null=True, blank=True)
+    completed = models.BooleanField(default=False)  # when a student has completed the 4-week free access
 
     def has_mentor(self):
         if self.current_mentor:
