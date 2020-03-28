@@ -4,6 +4,11 @@ from rest_framework import routers
 from match import views
 
 
+# customize admin text
+admin.site.site_header = "🏠 CodingNomads Admin"
+admin.site.site_title = "Admin Portal"
+admin.site.index_title = "#StayAt🏠 Mentorship Admin"
+
 router = routers.DefaultRouter()
 router.register(r'students', views.StudentViewSet, basename='students')
 router.register(r'mentors', views.MentorViewSet, basename='mentors')
