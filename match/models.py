@@ -5,7 +5,7 @@ class Person(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     info = models.TextField()
-    skills = models.ManyToManyField('Skill', null=True, blank=True)
+    skills = models.ManyToManyField('Skill', blank=True)
     timezone = models.IntegerField()
     daytime = models.CharField(max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)

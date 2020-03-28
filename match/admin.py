@@ -8,7 +8,7 @@ class StudentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'email', 'skills']
     #['name', 'email', 'info', 'skills', 'timezone', 'daytime', 'timestamp', 'lost_job']
     fieldsets = [
-        (None,               {'fields': ['name', 'email', 'info']}),
+        (None,               {'fields': ['name', 'email', 'info', 'current_mentor']}),
         ('Interests', {'fields': ['skills']}),
         ('Time Info', {'fields': ['timezone', 'daytime']}),
     ]  # omitting field 'timestamp' (for when the form was submitted) and 'lost_job'
