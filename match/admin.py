@@ -41,7 +41,7 @@ class StudentInLine(admin.TabularInline):
 
 class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('name', 'email', 'timezone', 'has_mentor', 'current_mentor', 'is_active')
-    list_filter = ['timezone', 'lost_job', 'timestamp', 'skills']
+    list_filter = ['skills', 'timezone', 'lost_job', 'timestamp']
     search_fields = ['name', 'email', 'skills']
     fieldsets = [
         (None, {'fields': ['name', 'email', 'info', 'current_mentor']}),
@@ -73,7 +73,7 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
     student_display.short_description = "Students"
 
     list_display = ('name', 'email', 'timezone', 'weeks', 'student_display', 'capacity', 'has_capacity')
-    list_filter = ['timezone', 'weeks', 'timestamp', 'skills']
+    list_filter = ['skills', 'timezone', 'weeks', 'timestamp']
     search_fields = ['name', 'email', 'skills']
 
     inlines = (StudentInLine, )  # SkillInLine (if wanting to add the Skills)
@@ -151,6 +151,7 @@ class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
             return False
 
     is_mentor.boolean = True  # display as a symbol
+    is_mentor.short_description = 'Mentor?'
 
     list_display = ('is_mentor', 'name_display', 'email', 'skills_display', 'timezone', 'is_active')
     list_filter = ['skills', 'timezone', 'timestamp']
