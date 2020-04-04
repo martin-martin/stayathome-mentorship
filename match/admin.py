@@ -40,7 +40,20 @@ class StudentInLine(admin.TabularInline):
 
 
 class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ('name', 'email', 'timezone', 'has_mentor', 'current_mentor', 'is_active')
+
+    def skills_display(self, obj):
+        """Displays all skills associated with current person as a clickable string.
+
+        Skill objects are separated by commas and access the Skill object's change page.
+        """
+        display_text = " | ".join(skill.type for skill in obj.skills.all())
+        if display_text:
+            return display_text
+        return "-"
+
+    skills_display.short_description = 'Interests'
+
+    list_display = ('name', 'email', 'skills_display', 'timezone', 'has_mentor', 'current_mentor', 'is_active')
     list_filter = ['skills', 'timezone', 'lost_job', 'timestamp']
     search_fields = ['name', 'email', 'skills']
     fieldsets = [
@@ -53,6 +66,18 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
+
+    def skills_display(self, obj):
+        """Displays all skills associated with current person as a clickable string.
+
+        Skill objects are separated by commas and access the Skill object's change page.
+        """
+        display_text = " | ".join(skill.type for skill in obj.skills.all())
+        if display_text:
+            return display_text
+        return "-"
+
+    skills_display.short_description = 'Skills'
 
     def student_display(self, obj):
         """Displays all students associated with current mentor as a clickable string.
@@ -72,7 +97,7 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     student_display.short_description = "Students"
 
-    list_display = ('name', 'email', 'timezone', 'weeks', 'student_display', 'capacity', 'has_capacity')
+    list_display = ('name', 'email', 'skills_display', 'timezone', 'weeks', 'student_display', 'capacity', 'has_capacity')
     list_filter = ['skills', 'timezone', 'weeks', 'timestamp']
     search_fields = ['name', 'email', 'skills']
 
@@ -141,6 +166,8 @@ class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
                 return "-"
             except:
                 return "* no object *"
+
+    name_display.short_description = 'Name'
 
     def is_mentor(self, obj):
         """Creates a boolean response on whether a Person object is linked to a Mentor object or not."""
