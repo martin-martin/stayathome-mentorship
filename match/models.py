@@ -13,6 +13,9 @@ class Person(models.Model):
     end_date = models.DateTimeField(default=None, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = "All Users"
+
     def is_active(self):
         if self.end_date:
             return timezone.now() < self.end_date
@@ -44,7 +47,7 @@ class Student(Person):
 
 class Mentor(Person):
     details = models.TextField(default=None, null=True, blank=True)
-    students = models.IntegerField()
+    students = models.IntegerField()  # how many they take on totally
     weeks = models.IntegerField()
 
     def has_capacity(self):
