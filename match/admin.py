@@ -153,7 +153,7 @@ class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
     is_mentor.boolean = True  # display as a symbol
 
     list_display = ('is_mentor', 'name_display', 'email', 'skills_display', 'timezone', 'is_active')
-    list_filter = ['skills', 'mentor', 'timezone', 'timestamp']
+    list_filter = ['skills', 'timezone', 'timestamp']
     search_fields = ['name', 'email', 'skills']
 
     fieldsets = [
