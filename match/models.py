@@ -70,11 +70,10 @@ class Mentor(Person):
 
 
 class Skill(models.Model):
-    form_value = models.IntegerField()
-    type = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
 
     class Meta:
         verbose_name_plural = "Technologies"
 
     def __str__(self):
-        return self.type
+        return self.name

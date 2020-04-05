@@ -22,4 +22,4 @@ class SkillSerializer(serializers.HyperlinkedModelSerializer):  # ModelSerialize
 
     class Meta:
         model = Skill
-        fields = ['form_value', 'type']
+        fields = ['id', 'name']

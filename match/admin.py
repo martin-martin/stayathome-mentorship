@@ -46,7 +46,7 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
 
         Skill objects are separated by commas and access the Skill object's change page.
         """
-        display_text = " | ".join(skill.type for skill in obj.skills.all())
+        display_text = " | ".join(skill.name for skill in obj.skills.all())
         if display_text:
             return display_text
         return "-"
@@ -72,7 +72,7 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
 
         Skill objects are separated by commas and access the Skill object's change page.
         """
-        display_text = " | ".join(skill.type for skill in obj.skills.all())
+        display_text = " | ".join(skill.name for skill in obj.skills.all())
         if display_text:
             return display_text
         return "-"
@@ -114,7 +114,9 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('type', 'form_value')
+    list_display = ('name', 'id')
+    readonly_fields = ('id',)
+    fields = ['id', 'name']
 
 
 class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
@@ -131,7 +133,7 @@ class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
             "<a href={}>{}</a>".format(
                     reverse('admin:{}_{}_change'.format(obj._meta.app_label, Skill._meta.model_name),
                     args=(skill.pk,)),
-                skill.type)
+                skill.name)
              for skill in obj.skills.all()
         ])
         if display_text:

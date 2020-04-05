@@ -70,6 +70,6 @@ class SkillViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows skills to be viewed or edited.
     """
-    queryset = Skill.objects.all().order_by('form_value')
+    queryset = Skill.objects.all().order_by('id')
     serializer_class = SkillSerializer
     permission_classes = [permissions.IsAuthenticated]
