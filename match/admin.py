@@ -53,9 +53,16 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     skills_display.short_description = 'Interests'
 
-    list_display = ('name', 'email', 'skills_display', 'timezone', 'has_mentor', 'current_mentor', 'is_active')
+    def date_created(self, obj):
+        return obj.timestamp.strftime("%b %d %Y")
+
+    date_created.admin_order_field = 'timestamp'
+    date_created.short_description = 'Date Created'
+
+    list_display = ('name', 'email', 'skills_display', 'timezone',
+                    'has_mentor', 'current_mentor', 'is_active', 'date_created')
     list_filter = ['skills', 'timezone', 'lost_job', 'timestamp']
-    search_fields = ['name', 'email', 'skills']
+    search_fields = ['name', 'email', 'skills__name']
     fieldsets = [
         (None, {'fields': ['name', 'email', 'info', 'current_mentor']}),
         ('Interests', {'fields': ['skills']}),
@@ -97,9 +104,16 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     student_display.short_description = "Students"
 
-    list_display = ('name', 'email', 'skills_display', 'timezone', 'weeks', 'student_display', 'capacity', 'has_capacity')
+    def date_created(self, obj):
+        return obj.timestamp.strftime("%b %d %Y")
+
+    date_created.admin_order_field = 'timestamp'
+    date_created.short_description = 'Date Created'
+
+    list_display = ('name', 'email', 'skills_display', 'timezone', 'weeks',
+                    'student_display', 'capacity', 'has_capacity', 'date_created')
     list_filter = ['skills', 'timezone', 'weeks', 'timestamp']
-    search_fields = ['name', 'email', 'skills']
+    search_fields = ['name', 'email', 'skills__name']
 
     inlines = (StudentInLine, )  # SkillInLine (if wanting to add the Skills)
 
@@ -182,9 +196,15 @@ class PersonAdmin(admin.ModelAdmin, ExportCsvMixin):
     is_mentor.boolean = True  # display as a symbol
     is_mentor.short_description = 'Mentor?'
 
-    list_display = ('is_mentor', 'name_display', 'email', 'skills_display', 'timezone', 'is_active')
+    def date_created(self, obj):
+        return obj.timestamp.strftime("%b %d %Y")
+
+    date_created.admin_order_field = 'timestamp'
+    date_created.short_description = 'Date Created'
+
+    list_display = ('is_mentor', 'name_display', 'email', 'skills_display', 'timezone', 'is_active', 'date_created')
     list_filter = ['skills', 'timezone', 'timestamp']
-    search_fields = ['name', 'email', 'skills']
+    search_fields = ['name', 'email', 'skills__name']
 
     fieldsets = [
         (None, {'fields': ['name', 'email', 'info']}),
