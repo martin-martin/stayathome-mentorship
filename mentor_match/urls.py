@@ -19,6 +19,7 @@ router.register(r'add-mentor', views.AddMentorViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
+    path('match', views.matchmaker, name='match'),
     # path('apply/mentor', views.show_mentor_form, name='mentor'),
     # path('apply/student', views.show_student_form, name='student'),
     # path('success/', views.show_success_page, name='success'),

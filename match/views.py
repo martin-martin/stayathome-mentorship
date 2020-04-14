@@ -1,10 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Student, Mentor, Skill
+from .models import Student, Mentor, Skill, Person
 from rest_framework import viewsets
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer, SkillSerializer
+from match.forms import SelectForm
 
+
+def matchmaker(request):
+    if request.method == 'POST':
+        form = SelectForm(request.POST)
+        if form.is_valid():
+            candidates = Person.objects.filter(timezone__gt=form.cleaned_data['timezone'])
+            context = {'form': form, 'candidates': candidates}
+            return render(request, 'match/match.html', context)
+    form = SelectForm()
+    context = {'form': form}
+    return render(request, 'match/match.html', context)
 
 def show_mentor_form(request):
     return render(request, 'mentors.html', {'color': 'success'})
