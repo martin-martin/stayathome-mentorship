@@ -2,17 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Match Maker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css">-->
+    <title>➡️✅⬅️</title>
+    <style>
+        body {
+            max-width: 1000px;
+            margin: auto;
+        }
+        .highlight {
+            color: green;
+        }
+        .important {
+            background-color: red;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Match Maker</h1>
-<p>This page pairs students with mentors by timezone and skills, and creates a default text to edit.</p>
-<hr>
+<section class="section">
+    <div class="container">
+        <h1 class="title">➡️ Matchmaker ⬅️</h1>
+        <p>This page pairs students with mentors by 🕓 <strong>timezone</strong> and ✅ <strong>skills</strong>,
+            and creates a default email text to use as a base for your edits.</p>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="email-base">
+        {% block content %}
 
-{% block content %}
-
-{% endblock %}
+        {% endblock %}
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

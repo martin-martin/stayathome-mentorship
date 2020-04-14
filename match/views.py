@@ -8,15 +8,33 @@ from match.forms import SelectForm
 
 
 def matchmaker(request):
+    """Simplifies the matching process by presenting suitable combinations and quick repaeatable steps."""
     if request.method == 'POST':
         form = SelectForm(request.POST)
         if form.is_valid():
-            candidates = Person.objects.filter(timezone__gt=form.cleaned_data['timezone'])
-            context = {'form': form, 'candidates': candidates}
+            # filter all candidates that are in similar timezones +/- 1 of their timezone
+            time_match = Person.objects.filter(timezone__gte=int(form.cleaned_data['timezone'])-1)\
+                                       .filter(timezone__lte=int(form.cleaned_data['timezone'])+1)
+            # filter all candidates that have the selected skill among their skills
+            candidates = time_match.filter(skills__in=form.cleaned_data['skill'])
+            # --- GET MENTORS ---
+            all_mentors = candidates.filter(mentor__isnull=False)
+            # keep only mentors that have capacity to take students
+            mentors = [mentor for mentor in all_mentors if mentor.mentor.has_capacity()]
+            # --- GET STUDENTS ---
+            all_students = candidates.filter(mentor__isnull=True)
+            # keep only students that don't currently have a mentor assigned to them
+            students = [student for student in all_students if not student.student.current_mentor]
+            """TODO:
+            ========
+            - button to click "next" for another match?
+            """
+            context = {'form': form, 'mentors': mentors, 'students': students}
             return render(request, 'match/match.html', context)
     form = SelectForm()
     context = {'form': form}
     return render(request, 'match/match.html', context)
+
 
 def show_mentor_form(request):
     return render(request, 'mentors.html', {'color': 'success'})

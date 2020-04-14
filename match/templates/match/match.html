@@ -1,20 +1,76 @@
 {% extends 'match/base.html' %}
 
 {% block content %}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Find Match">
+    </form>
+</div>
+<hr>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-</form>
+{% if mentors and students %}
 
-{% if candidates %}
+<div>
+    <p>Matched Mentor <strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/mentor/{{mentors.0.id}}/change/" target="_blank">{{ mentors.0.name }}</a></strong>
+        with Student <strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/student/{{students.0.id}}/change/" target="_blank">{{ students.0.name }}</a></strong>
+    </p>
+    <!--p>Matched Mentor <strong><a href="http://localhost:8000/admin/match/mentor/{{mentors.0.id}}/change/" target="_blank">{{ mentors.0.name }}</a></strong>
+        with Student <strong><a href="http://localhost:8000/admin/match/student/{{students.0.id}}/change/" target="_blank">{{ students.0.name }}</a></strong>
+    </p-->
+    <ol>
+        <li>
+            Add them to our <a href="https://forum.codingnomads.co/" target="_blank">CodingNomads Forum</a>:
+            <ul>
+                <li class="highlight">{{ mentors.0.email }}</li>
+                <li class="highlight">{{ students.0.email }}</li>
+            </ul>
+        </li>
+        <li><span class="important">Proof-read and edit the email template below</span></li>
+        <li><a href="mailto:{{ students.0.email }},{{ mentors.0.email }}?subject=#StayAtHome Mentorship - Introducing {{ students.0.name.split.0 }} and {{ mentors.0.name.split.0 }}" target="_blank">
+            Paste and send the email here</a> and add Ryan/Martin to CC</li>
+    </ol>
+</div>
+<hr>
 
-{% for c in candidates %}
-    <p>{{c.name}}</p>
-    <p>{{c.info}}</p>
+{% include 'match/email.html' %}
+
+{% else %}
+
+<p>No mentor + student match for this skill and timezone combination.</p>
+
+{% endif %}
+
+
+{% if mentors %}
+
+<hr>
+<h2>Alternatives</h2>
+
+<h3>Mentors</h3>
+<ul>
+{% for mentor in mentors %}
+    <li class="person-info">
+        <p><strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/mentor/{{mentor.id}}/change/" target="_blank">{{ mentor.name }}</a></strong>: {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p>
+        <!--p><strong><a href="http://localhost:8000/admin/match/mentor/{{mentor.id}}/change/" target="_blank">{{ mentor.name }}</a></strong>: {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p-->
+    </li>
 {% endfor %}
+</ul>
+{% endif %}
 
+
+{% if students %}
+
+<h3>Students</h3>
+<ul>
+{% for student in students %}
+    <li class="person-info">
+        <p><strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/student/{{student.id}}/change/" target="_blank">{{ student.name }}</a></strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p>
+        <!--p><strong><a href="http://localhost:8000/admin/match/student/{{student.id}}/change/" target="_blank">{{ student.name }}</a></strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p-->
+    </li>
+{% endfor %}
+</ul>
 {% endif %}
 
 {% endblock %}
