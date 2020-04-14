@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Student, Mentor, Skill, Person
 from rest_framework import viewsets
@@ -7,6 +8,7 @@ from match.serializers import StudentSerializer, MentorSerializer, SkillSerializ
 from match.forms import SelectForm
 
 
+@login_required
 def matchmaker(request):
     """Simplifies the matching process by presenting suitable combinations and quick repaeatable steps."""
     if request.method == 'POST':
