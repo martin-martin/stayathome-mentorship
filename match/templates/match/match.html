@@ -13,12 +13,15 @@
 {% if mentors and students %}
 
 <div>
-    <p>Matched Mentor <strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/mentor/{{mentors.0.id}}/change/" target="_blank">{{ mentors.0.name }}</a></strong>
-        with Student <strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/student/{{students.0.id}}/change/" target="_blank">{{ students.0.name }}</a></strong>
+    <p>Matched Mentor
+        <a href="{% url 'admin:match_mentor_change' mentors.0.id %}" target="_blank">
+            {{ mentors.0.name }}
+        </a>
+        with Student
+        <a href="{% url 'admin:match_student_change' students.0.id %}" target="_blank">
+            {{ students.0.name }}
+        </a>
     </p>
-    <!--p>Matched Mentor <strong><a href="http://localhost:8000/admin/match/mentor/{{mentors.0.id}}/change/" target="_blank">{{ mentors.0.name }}</a></strong>
-        with Student <strong><a href="http://localhost:8000/admin/match/student/{{students.0.id}}/change/" target="_blank">{{ students.0.name }}</a></strong>
-    </p-->
     <ol>
         <li>
             Add them to our <a href="https://forum.codingnomads.co/" target="_blank">CodingNomads Forum</a>:
@@ -52,8 +55,8 @@
 <ul>
 {% for mentor in mentors %}
     <li class="person-info">
-        <p><strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/mentor/{{mentor.id}}/change/" target="_blank">{{ mentor.name }}</a></strong>: {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p>
-        <!--p><strong><a href="http://localhost:8000/admin/match/mentor/{{mentor.id}}/change/" target="_blank">{{ mentor.name }}</a></strong>: {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p-->
+        <p><strong><a href="{% url 'admin:match_mentor_change' mentor.id %}" target="_blank">{{ mentor.name }}</a>
+        </strong>: {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p>
     </li>
 {% endfor %}
 </ul>
@@ -66,8 +69,8 @@
 <ul>
 {% for student in students %}
     <li class="person-info">
-        <p><strong><a href="https://stayathome-mentorship.herokuapp.com/admin/match/student/{{student.id}}/change/" target="_blank">{{ student.name }}</a></strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p>
-        <!--p><strong><a href="http://localhost:8000/admin/match/student/{{student.id}}/change/" target="_blank">{{ student.name }}</a></strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p-->
+        <p><strong><a href="{% url 'admin:match_student_change' student.id %}" target="_blank">{{ student.name }}</a>
+        </strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p>
     </li>
 {% endfor %}
 </ul>
