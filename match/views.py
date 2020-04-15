@@ -8,9 +8,17 @@ from match.serializers import StudentSerializer, MentorSerializer, SkillSerializ
 from match.forms import SelectForm
 
 
+def safe_list_get(my_list, idx, default):
+    """Provides a safe fallback when list index is out of range."""
+    try:
+        return my_list[idx]
+    except IndexError:
+        return default
+
+
 @login_required
 def matchmaker(request):
-    """Simplifies the matching process by presenting suitable combinations and quick repaeatable steps."""
+    """Simplifies the matching process by presenting suitable combinations and quick repeatable steps."""
     if request.method == 'POST':
         form = SelectForm(request.POST)
         if form.is_valid():
@@ -27,11 +35,31 @@ def matchmaker(request):
             all_students = candidates.filter(mentor__isnull=True)
             # keep only students that don't currently have a mentor assigned to them
             students = [student for student in all_students if not student.student.current_mentor]
-            """TODO:
-            ========
-            - button to click "next" for another match?
-            """
-            context = {'form': form, 'mentors': mentors, 'students': students}
+            # logic below allows for selecting different mentors if the match isn't great
+            if form.cleaned_data['change_mentor'] and form.cleaned_data['change_student']:
+                context = {'form': form, 'mentors': mentors, 'students': students,
+                           'mentor': Person.objects.get(pk=form.cleaned_data['change_mentor']),
+                           'student': Person.objects.get(pk=form.cleaned_data['change_student'])
+                           }
+                print(context)
+            elif form.cleaned_data['change_mentor']:
+                context = {'form': form, 'mentors': mentors, 'students': students,
+                           'mentor': Person.objects.get(pk=form.cleaned_data['change_mentor']),
+                           'student': safe_list_get(students, 0, None)
+                           }
+                print(context)
+            elif form.cleaned_data['change_student']:
+                context = {'form': form, 'mentors': mentors, 'students': students,
+                           'mentor': safe_list_get(mentors, 0, None),
+                           'student': Person.objects.get(pk=form.cleaned_data['change_student'])
+                           }
+                print(context)
+            else:
+                context = {'form': form, 'mentors': mentors, 'students': students,
+                           'mentor': safe_list_get(mentors, 0, None),
+                           'student': safe_list_get(students, 0, None)
+                           }
+                print(context)
             return render(request, 'match/match.html', context)
     form = SelectForm()
     context = {'form': form}

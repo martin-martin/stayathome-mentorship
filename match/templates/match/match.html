@@ -5,36 +5,36 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Find Match">
+        <input type="submit" value="Match">
     </form>
 </div>
+
 <hr>
 
-{% if mentors and students %}
+{% if mentor and student %}
 
 <div>
     <p>Matched Mentor
-        <a href="{% url 'admin:match_mentor_change' mentors.0.id %}" target="_blank">
-            {{ mentors.0.name }}
-        </a> <em>({{ mentors.0.daytime }})</em>
+        <a href="{% url 'admin:match_mentor_change' mentor.id %}" target="_blank">
+            {{ mentor.name }}
+        </a> <em>({{ mentor.daytime }})</em>
         with Student
-        <a href="{% url 'admin:match_student_change' students.0.id %}" target="_blank">
-            {{ students.0.name }}
-        </a> <em>({{ students.0.daytime }})</em>
+        <a href="{% url 'admin:match_student_change' student.id %}" target="_blank">
+            {{ student.name }}
+        </a> <em>({{ student.daytime }})</em>
     </p>
-    <h1>{{ user.username }}</h1>
     <ol>
         <li>
             Add them to our
             <a href="https://forum.codingnomads.co/u/{{ user.username }}/invited/pending" target="_blank">
                 CodingNomads Forum</a>:
             <ul>
-                <li class="highlight">{{ mentors.0.email }}</li>
-                <li class="highlight">{{ students.0.email }}</li>
+                <li class="highlight">{{ mentor.email }}</li>
+                <li class="highlight">{{ student.email }}</li>
             </ul>
         </li>
         <li><span class="important">Proof-read and edit the email template below</span></li>
-        <li><a href="mailto:{{ students.0.email }},{{ mentors.0.email }}?cc={{ user.username }}@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ students.0.name.split.0 }}%20and%20{{ mentors.0.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+        <li><a href="mailto:{{ student.email }},{{ mentor.email }}?cc={{ user.username }}@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ student.name.split.0 }}%20and%20{{ mentor.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
             Paste and send the email here</a></li>
     </ol>
 </div>
@@ -52,7 +52,9 @@
 {% if mentors %}
 
 <hr>
-<h2>Alternatives</h2>
+<h2 id="alternatives">Alternatives</h2>
+<p>These mentors/students fit the skill and timezone selection.
+    To update the email template, select one of them up above and click <kbd>Match</kbd> again</p>
 
 <h3>Mentors</h3>
 <ul>
