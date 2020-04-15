@@ -33,7 +33,13 @@
         a free account on the platform and send me a quick email letting me know.
         I'll change your enrollment status so you have full access.</p>
 
-    <p>If either of you would like any assistance at any time, just let me or Martin (CC'd) know.
+    <p>If either of you would like any assistance at any time, just let me or
+        {% if user.username == 'martin' %}
+            Ryan
+        {% else %}
+            Martin
+        {% endif %}
+        (CC'd) know.
         We're here to help. In the meantime, please feel free to remove us from the thread.</p>
 
     <div>

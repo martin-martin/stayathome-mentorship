@@ -22,17 +22,20 @@
             {{ students.0.name }}
         </a>
     </p>
+    <h1>{{ user.username }}</h1>
     <ol>
         <li>
-            Add them to our <a href="https://forum.codingnomads.co/" target="_blank">CodingNomads Forum</a>:
+            Add them to our
+            <a href="https://forum.codingnomads.co/u/{{ user.username }}/invited/pending" target="_blank">
+                CodingNomads Forum</a>:
             <ul>
                 <li class="highlight">{{ mentors.0.email }}</li>
                 <li class="highlight">{{ students.0.email }}</li>
             </ul>
         </li>
         <li><span class="important">Proof-read and edit the email template below</span></li>
-        <li><a href="mailto:{{ students.0.email }},{{ mentors.0.email }}?subject=#StayAtHome Mentorship - Introducing {{ students.0.name.split.0 }} and {{ mentors.0.name.split.0 }}" target="_blank">
-            Paste and send the email here</a> and add Ryan/Martin to CC</li>
+        <li><a href="mailto:{{ students.0.email }},{{ mentors.0.email }}?cc={{ user.username }}@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ students.0.name.split.0 }}%20and%20{{ mentors.0.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+            Paste and send the email here</a></li>
     </ol>
 </div>
 <hr>
