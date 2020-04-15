@@ -16,11 +16,11 @@
     <p>Matched Mentor
         <a href="{% url 'admin:match_mentor_change' mentors.0.id %}" target="_blank">
             {{ mentors.0.name }}
-        </a>
+        </a> <em>({{ mentors.0.daytime }})</em>
         with Student
         <a href="{% url 'admin:match_student_change' students.0.id %}" target="_blank">
             {{ students.0.name }}
-        </a>
+        </a> <em>({{ students.0.daytime }})</em>
     </p>
     <h1>{{ user.username }}</h1>
     <ol>
