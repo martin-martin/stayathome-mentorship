@@ -34,8 +34,13 @@
             </ul>
         </li>
         <li><span class="important">Proof-read and edit the email template below</span></li>
-        <li><a href="mailto:{{ student.email }},{{ mentor.email }}?cc={{ user.username }}@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ student.name.split.0 }}%20and%20{{ mentor.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+        {% if user.username == 'martin' %}
+        <li><a href="mailto:{{ student.email }},{{ mentor.email }}?cc=ryan@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ student.name.split.0 }}%20and%20{{ mentor.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
             Paste and send the email here</a></li>
+        {% else %}
+        <li><a href="mailto:{{ student.email }},{{ mentor.email }}?cc=martin@codingnomads.co&subject=#StayAtHome%20Mentorship%20-%20Introducing%20{{ student.name.split.0 }}%20and%20{{ mentor.name.split.0 }}&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+            Paste and send the email here</a></li>
+        {% endif %}
     </ol>
 </div>
 <hr>

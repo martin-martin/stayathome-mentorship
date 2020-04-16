@@ -64,10 +64,10 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = ['skills', 'timezone', 'lost_job', 'timestamp']
     search_fields = ['name', 'email', 'skills__name']
     fieldsets = [
-        (None, {'fields': ['name', 'email', 'info', 'current_mentor']}),
+        (None, {'fields': ['name', 'email', 'info', 'current_mentor', 'lost_job']}),
         ('Interests', {'fields': ['skills']}),
         ('Time Info', {'fields': ['timezone', 'daytime', 'start_date', 'end_date']}),
-    ]  # omitting field 'timestamp' (for when the form was submitted) and 'lost_job'
+    ]  # omitting field 'timestamp' (for when the form was submitted)
 
     actions = ["export_as_csv"]
 
