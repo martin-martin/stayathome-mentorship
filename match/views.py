@@ -22,7 +22,7 @@ def followup(request):
     """Shows students that didn't leave a lot of information to allow for quick follow-up emails."""
     student = None
     form = FollowUpForm()
-    low_info_students = Student.objects.annotate(text_len=Length('info')).filter(text_len__gt=10)
+    low_info_students = Student.objects.annotate(text_len=Length('info')).filter(text_len__lt=80)
     if request.method == 'POST':
         form = FollowUpForm(request.POST)
         if form.is_valid():
