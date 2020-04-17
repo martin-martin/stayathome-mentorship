@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Length
 from django.http import HttpResponseRedirect
-#from .models import Student, Mentor, Skill, Person
+from .models import Student, Mentor, Skill, Person
 from rest_framework import viewsets
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer, SkillSerializer
