@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Length
 from django.http import HttpResponseRedirect
-from .models import Student, Mentor, Skill, Person
+#from .models import Student, Mentor, Skill, Person
 from rest_framework import viewsets
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer, SkillSerializer
-from match.forms import SelectForm
+from match.forms import SelectForm, FollowUpForm
 
 
 def safe_list_get(my_list, idx, default):
@@ -14,6 +15,23 @@ def safe_list_get(my_list, idx, default):
         return my_list[idx]
     except IndexError:
         return default
+
+
+@login_required
+def followup(request):
+    """Shows students that didn't leave a lot of information to allow for quick follow-up emails."""
+    student = None
+    form = FollowUpForm()
+    low_info_students = Student.objects.annotate(text_len=Length('info')).filter(text_len__gt=10)
+    if request.method == 'POST':
+        form = FollowUpForm(request.POST)
+        if form.is_valid():
+            print("AVALID")
+            student_id = form.cleaned_data['student']
+            student = Student.objects.get(pk=student_id)
+            print(student)
+    context = {"students": low_info_students, "student": student, 'form': form}
+    return render(request, 'match/followup.html', context)
 
 
 @login_required

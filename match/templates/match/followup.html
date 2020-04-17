@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📧 Follow-Up</title>
+    <style>
+        body {
+            max-width: 1000px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>📧 Applicant Follow-Up Helper</h1>
+
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Generate Email">
+    </form>
+</div>
+
+{% if student %}
+
+    <p>Follow Up with a prospective student</p>
+    <ul>
+        <li><span class="important">Proof-read and edit the email template below</span></li>
+        {% if user.username == 'martin' %}
+        <li><a href="mailto:{{ student.email }}?cc=ryan@codingnomads.co&subject=#StayAtHome%20Mentorship%20Program&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+            Paste and send the email here</a></li>
+        {% else %}
+        <li><a href="mailto:{{ student.email }}?cc=martin@codingnomads.co&subject=#StayAtHome%20Mentorship%20Program&body=Paste,%20then%20proof-read%20and%20edit%20here." target="_blank">
+            Paste and send the email here</a></li>
+        {% endif %}
+    </ul>
+
+<hr>
+
+    {% include 'match/followup_msg.html' %}
+
+{% else %}
+
+    <p>Please select a student to generate the message. Look for students with little info below.</p>
+
+{% endif %}
+
+<hr>
+
+<h2>Students That Might Need Follow-Up</h2>
+
+<ul>
+{% for student in students %}
+    <li class="person-info">
+        <p><strong><a href="{% url 'admin:match_student_change' student.id %}" target="_blank">{{ student.name }}</a>
+        </strong>: {{ student.info }} - <em>({{ student.daytime }})</em></p>
+    </li>
+{% endfor %}
+    </ul>
+</body>
+</html>

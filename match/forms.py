@@ -13,3 +13,9 @@ class SelectForm(forms.Form):
     timezone = forms.ChoiceField(choices=TIMEZONES)
     change_mentor = forms.ChoiceField(choices=MENTORS, required=False)
     change_student = forms.ChoiceField(choices=STUDENTS, required=False)
+
+
+class FollowUpForm(forms.Form):
+    STUDENTS = [(student.id, student.name) for student in Student.objects.all() if not student.current_mentor]
+    STUDENTS.insert(0, (None, '----'))
+    student = forms.ChoiceField(choices=STUDENTS, required=False)
