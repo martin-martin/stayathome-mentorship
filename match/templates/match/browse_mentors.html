@@ -3,6 +3,11 @@
 {% block content %}
 
 <h1>Browse Unassigned Mentors' Info</h1>
+<div class="linklist">
+    <button><a href="{% url 'browse_students' %}">Browse Students</a></button>
+    <button><a href="{% url 'match' %}">Match Candidates</a></button>
+</div>
+<hr>
 
 <ul>
     {% for mentor in mentors %}

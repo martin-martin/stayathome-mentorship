@@ -4,6 +4,12 @@
 
 <h1>Browse Unassigned Students' Info</h1>
 
+<div class="linklist">
+    <button><a href="{% url 'browse_mentors' %}">Browse Mentors</a></button>
+    <button><a href="{% url 'match' %}">Match Candidates</a></button>
+    <button><a href="{% url 'followup' %}">Follow Up</a></button>
+</div>
+<hr>
 <ul>
     {% for student in students %}
     <li class="person-info">
