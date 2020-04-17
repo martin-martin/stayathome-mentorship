@@ -1,0 +1,16 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+
+<h1>Browse Unassigned Students' Info</h1>
+
+<ul>
+    {% for student in students %}
+    <li class="person-info">
+        <p><strong><a href="{% url 'admin:match_student_change' student.id %}" target="_blank">{{ student.name }}</a>
+        </strong>: {% if student.lost_job %}<span class="important">Lost Job</span>{% endif %} {{ student.info }} - <em>({{ student.daytime }})</em></p>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

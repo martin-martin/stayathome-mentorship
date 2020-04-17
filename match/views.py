@@ -18,6 +18,19 @@ def safe_list_get(my_list, idx, default):
 
 
 @login_required
+def browse_students(request):
+    students = Student.objects.filter(current_mentor=None)
+    return render(request, 'match/browse_students.html', {'students': students})
+
+
+@login_required
+def browse_mentors(request):
+    all_mentors = Mentor.objects.all()
+    mentors = [mentor for mentor in all_mentors if mentor.mentor.has_capacity()]
+    return render(request, 'match/browse_mentors.html', {'mentors': mentors})
+
+
+@login_required
 def followup(request):
     """Shows students that didn't leave a lot of information to allow for quick follow-up emails."""
     student = None

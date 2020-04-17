@@ -1,0 +1,16 @@
+{% extends 'match/base.html' %}
+
+{% block content %}
+
+<h1>Browse Unassigned Mentors' Info</h1>
+
+<ul>
+    {% for mentor in mentors %}
+    <li class="person-info">
+        <p><strong><a href="{% url 'admin:match_mentor_change' mentor.id %}" target="_blank">{{ mentor.name }}</a>
+        </strong>: <span class="highlight">(Capacity: {{ mentor.capacity }})</span> {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
