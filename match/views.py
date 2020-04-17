@@ -26,10 +26,8 @@ def followup(request):
     if request.method == 'POST':
         form = FollowUpForm(request.POST)
         if form.is_valid():
-            print("AVALID")
             student_id = form.cleaned_data['student']
             student = Student.objects.get(pk=student_id)
-            print(student)
     context = {"students": low_info_students, "student": student, 'form': form}
     return render(request, 'match/followup.html', context)
 
