@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>📧 Follow-Up</title>
-    <style>
-        body {
-            max-width: 1000px;
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
+{% extends 'match/base.html' %}
+
+{% block content %}
+
 <h1>📧 Applicant Follow-Up Helper</h1>
 
 <div>
@@ -57,5 +48,5 @@
     </li>
 {% endfor %}
     </ul>
-</body>
-</html>
+
+{% endblock %}

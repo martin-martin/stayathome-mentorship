@@ -1,6 +1,29 @@
 {% extends 'match/base.html' %}
 
 {% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">➡️ Matchmaker ⬅️</h1>
+        <p>This page pairs students with mentors by 🕓 <strong>timezone</strong> and ✅ <strong>skills</strong>,
+            and creates a default email text to use as a base for your edits.</p>
+        <ol>
+            <li><span class="highlight">Select <kbd>Skill</kbd> and <kbd>Timezone</kbd> and click <kbd>Match</kbd></span></li>
+            <li>If the suggested match isn't great, scroll to the bottom to see other fitting options
+                <ul>
+                    <li>Find a suitable mentor/student combination</li>
+                    <li>Select them in <kbd>Change Mentor</kbd> and/or <kbd>Change Student</kbd></li>
+                    <li><span class="important">Note that the drop-down shows <em>all</em> candidates.
+                        Pick people from the <a href="#alternatives">Alternatives</a> section below to make sure skills and
+                    timezone matches</span></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</section>
+<hr>
+<section class="section">
+    <div class="container">
+
 <div>
     <form action="" method="post">
         {% csrf_token %}
@@ -85,5 +108,7 @@
 {% endfor %}
 </ul>
 {% endif %}
+    </div>
+    </section>
 
 {% endblock %}
