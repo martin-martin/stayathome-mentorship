@@ -39,10 +39,14 @@ class ExportActiveEmailsMixin:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}.txt'.format(meta)
 
+        # TODO: fix the hacky way of filtering out students/mentors that shouldn't receive an email
+        #       that's the ones currently binned via "WON'T ASSIGN" AND "UNRESPONSIVE" mentor objects
         if meta.model_name == 'mentor':  # get only active mentors
-            filtered_queryset = [mentor for mentor in queryset if mentor.current_students()]
+            filtered_queryset = [mentor for mentor in queryset if mentor.current_students()
+                                 and mentor.name not in ("WON'T ASSIGN", "UNRESPONSIVE")]
         elif meta.model_name == 'student':  # get only students with mentors
-            filtered_queryset = [student for student in queryset if student.has_mentor()]
+            filtered_queryset = [student for student in queryset if student.has_mentor()
+                                 and student.current_mentor.name not in ("WON'T ASSIGN", "UNRESPONSIVE")]
         else:  # no filtering if it is applied somewhere else
             filtered_queryset = queryset
 
