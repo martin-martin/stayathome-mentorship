@@ -1,4 +1,5 @@
 import csv
+import io
 from django.http import HttpResponse
 from django.shortcuts import reverse
 from django.utils.safestring import mark_safe
@@ -26,6 +27,33 @@ class ExportCsvMixin:
     export_as_csv.short_description = "Export Selected to CSV"
 
 
+class ExportActiveEmailsMixin:
+    """
+    Filters email addresses of active students/mentors and exports them in a format that can easily
+    be used in CC fields of email programs.
+    """
+    def export_active_emails(self, request, queryset):
+
+        meta = self.model._meta
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.txt'.format(meta)
+
+        if meta.model_name == 'mentor':  # get only active mentors
+            filtered_queryset = [mentor for mentor in queryset if mentor.current_students()]
+        elif meta.model_name == 'student':  # get only students with mentors
+            filtered_queryset = [student for student in queryset if student.has_mentor()]
+        else:  # no filtering if it is applied somewhere else
+            filtered_queryset = queryset
+
+        for obj in filtered_queryset:
+            response.write(getattr(obj, 'email') + ',')
+
+        return response
+
+    export_active_emails.short_description = "Export Active Emails"
+
+
 class StudentInLine(admin.TabularInline):
     model = Student
     fk_name = 'current_mentor'
@@ -39,7 +67,7 @@ class StudentInLine(admin.TabularInline):
 #     extra = 0
 
 
-class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
+class StudentAdmin(admin.ModelAdmin, ExportCsvMixin, ExportActiveEmailsMixin):
 
     def skills_display(self, obj):
         """Displays all skills associated with current person as a clickable string.
@@ -69,10 +97,10 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
         ('Time Info', {'fields': ['timezone', 'daytime', 'start_date', 'end_date']}),
     ]  # omitting field 'timestamp' (for when the form was submitted)
 
-    actions = ["export_as_csv"]
+    actions = ["export_as_csv", "export_active_emails"]
 
 
-class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
+class MentorAdmin(admin.ModelAdmin, ExportCsvMixin, ExportActiveEmailsMixin):
 
     def skills_display(self, obj):
         """Displays all skills associated with current person as a clickable string.
@@ -124,7 +152,7 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin):
         ('Time Info', {'fields': ['timezone', 'daytime']}),
     ]  # omitting field 'timestamp' (for when the form was submitted)
 
-    actions = ["export_as_csv"]
+    actions = ["export_as_csv", "export_active_emails"]
 
 
 class SkillAdmin(admin.ModelAdmin):
