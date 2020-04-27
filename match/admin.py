@@ -1,5 +1,4 @@
 import csv
-import io
 from django.http import HttpResponse
 from django.shortcuts import reverse
 from django.utils.safestring import mark_safe
