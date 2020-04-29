@@ -1,9 +1,15 @@
 {% extends 'match/base.html' %}
 
 {% block content %}
+
 <section class="section">
     <div class="container">
         <h1 class="title">➡️ Matchmaker ⬅️</h1>
+        <div class="linklist">
+            <button><a href="{% url 'browse_mentors' %}">Browse Mentors</a></button>
+            <button><a href="{% url 'browse_students' %}">Browse Students</a></button>
+            <button><a href="{% url 'followup' %}">Follow Up</a></button>
+        </div>
         <p>This page pairs students with mentors by 🕓 <strong>timezone</strong> and ✅ <strong>skills</strong>,
             and creates a default email text to use as a base for your edits.</p>
         <ol>
