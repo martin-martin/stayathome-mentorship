@@ -12,7 +12,7 @@
 <ul>
     {% for mentor in mentors %}
     <li class="person-info">
-        <p>{% if mentor.current_students %}<span class="important">No Students</span>{% endif %}
+        <p>{% if not mentor.current_students %}<span class="important">No Students</span>{% endif %}
             <strong><a href="{% url 'admin:match_mentor_change' mentor.id %}" target="_blank">{{ mentor.name }}</a>
         </strong>: <span class="highlight">(Capacity: {{ mentor.capacity }})</span> {{ mentor.info }} - <em>({{ mentor.daytime }})</em></p>
     </li>
