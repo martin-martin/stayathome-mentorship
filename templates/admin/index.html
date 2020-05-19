@@ -28,11 +28,11 @@
             <td>{% count_students %}</td>
         </tr>
         <tr>
-            <td>Unassigned Students</td>
+            <td><a href="{% url 'browse_students' %}">Unassigned Students</a></td>
             <td>{% count_unassigned_students %}</td>
         </tr>
         <tr>
-            <td>Total Mentorship Capacity</td>
+            <td><a href="{% url 'browse_mentors' %}">Total Mentorship Capacity</a></td>
             <td>{% count_total_capacity %}</td>
         </tr>
     </table>
