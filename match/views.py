@@ -6,7 +6,7 @@ from .models import Student, Mentor, Skill, Person
 from rest_framework import viewsets
 from rest_framework import permissions
 from match.serializers import StudentSerializer, MentorSerializer, SkillSerializer
-#from match.forms import SelectForm, FollowUpForm
+from match.forms import SelectForm, FollowUpForm
 
 
 def safe_list_get(my_list, idx, default):
