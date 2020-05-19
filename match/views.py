@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.db.models.functions import Length
 from django.http import HttpResponseRedirect
 from .models import Student, Mentor, Skill, Person
@@ -19,12 +20,20 @@ def safe_list_get(my_list, idx, default):
 
 @login_required
 def browse_students(request):
-    students = Student.objects.filter(current_mentor=None)
+    """
+    Show a list of unassigned students that may be eligible to be matched with a mentor.
+
+    Filters students that have not been responsive, dropped out or decided to pause the program, as well as alumni.
+    """
+    students = Student.objects.filter(current_mentor=None)\
+                              .exclude(Q(status='drop-out') | Q(status='unresponsive') | Q(status='retainer')
+                                       | Q(status='alum') | Q(status='paused'))
     return render(request, 'match/browse_students.html', {'students': students})
 
 
 @login_required
 def browse_mentors(request):
+    """Show a list of mentors that still have availability to take on a student."""
     all_mentors = Mentor.objects.all()
     mentors = [mentor for mentor in all_mentors if mentor.mentor.has_capacity()]
     return render(request, 'match/browse_mentors.html', {'mentors': mentors})

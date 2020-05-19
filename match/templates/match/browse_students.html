@@ -14,7 +14,12 @@
     {% for student in students %}
     <li class="person-info">
         <p><strong><a href="{% url 'admin:match_student_change' student.id %}" target="_blank">{{ student.name }}</a>
-        </strong>: {% if student.lost_job %}<span class="important">Lost Job</span>{% endif %} {{ student.info }} - <em>({{ student.daytime }})</em></p>
+        </strong> (UTC {{ student.timezone }}) : {% if student.lost_job %}<span class="important">Lost Job</span>{% endif %} {{ student.info }} - <em>({{ student.daytime }})</em></p>
+        {% if student.notes %}
+        <ul>
+            <li class="secondary"><strong class="highlight">Notes:</strong> {{ student.notes }}</li>
+        </ul>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
