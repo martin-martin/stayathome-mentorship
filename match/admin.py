@@ -42,10 +42,10 @@ class ExportActiveEmailsMixin:
         #       that's the ones currently binned via "WON'T ASSIGN" AND "UNRESPONSIVE" mentor objects
         if meta.model_name == 'mentor':  # get only active mentors
             filtered_queryset = [mentor for mentor in queryset if mentor.current_students()
-                                 and mentor.name not in ("WON'T ASSIGN", "UNRESPONSIVE")]
+                                 and mentor.status in ("active", "volunteer")]
         elif meta.model_name == 'student':  # get only students with mentors
             filtered_queryset = [student for student in queryset if student.has_mentor()
-                                 and student.current_mentor.name not in ("WON'T ASSIGN", "UNRESPONSIVE")]
+                                 and student.status not in ("paused", "drop-out", "unresponsive", "retainer", "alum")]
         else:  # no filtering if it is applied somewhere else
             filtered_queryset = queryset
 
@@ -73,16 +73,28 @@ class StudentInLine(admin.TabularInline):
 class StudentAdmin(admin.ModelAdmin, ExportCsvMixin, ExportActiveEmailsMixin):
 
     def skills_display(self, obj):
-        """Displays all skills associated with current person as a clickable string.
-
-        Skill objects are separated by commas and access the Skill object's change page.
-        """
+        """Displays all skills associated with current person. Skill objects are separated by commas."""
         display_text = " | ".join(skill.name for skill in obj.skills.all())
         if display_text:
             return display_text
         return "-"
 
+    def mentor_display(self, obj):
+        """Displays student's mentor as a clickable string. Mentor object accesses the associated change page."""
+        if obj.current_mentor:
+            display_text = "<a href={}>{}</a>".format(
+                    reverse('admin:{}_{}_change'.format(obj._meta.app_label, Mentor._meta.model_name),
+                            args=(obj.current_mentor.pk,)),
+                    obj.current_mentor.name)
+            if display_text:
+                return mark_safe(display_text)
+            else:
+                return "-"
+        else:
+            return "-"
+
     skills_display.short_description = 'Interests'
+    mentor_display.short_description = 'Mentor'
 
     def date_created(self, obj):
         return obj.timestamp.strftime("%b %d %Y")
@@ -91,11 +103,11 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin, ExportActiveEmailsMixin):
     date_created.short_description = 'Date Created'
 
     list_display = ('name', 'email', 'skills_display', 'timezone',
-                    'has_mentor', 'current_mentor', 'is_active', 'date_created')
+                    'mentor_display', 'status', 'date_created')
     list_filter = ['skills', 'timezone', 'lost_job', 'timestamp']
     search_fields = ['name', 'email', 'skills__name']
     fieldsets = [
-        (None, {'fields': ['name', 'email', 'info', 'current_mentor', 'lost_job']}),
+        (None, {'fields': ['name', 'email', 'info', 'notes', 'status', 'current_mentor', 'lost_job']}),
         ('Interests', {'fields': ['skills']}),
         ('Time Info', {'fields': ['timezone', 'daytime', 'start_date', 'end_date']}),
     ]  # omitting field 'timestamp' (for when the form was submitted)
@@ -142,15 +154,15 @@ class MentorAdmin(admin.ModelAdmin, ExportCsvMixin, ExportActiveEmailsMixin):
     date_created.short_description = 'Date Created'
 
     list_display = ('name', 'email', 'skills_display', 'timezone', 'weeks',
-                    'student_display', 'capacity', 'has_capacity', 'date_created')
+                    'student_display', 'capacity', 'has_capacity', 'status', 'date_created')
     list_filter = ['skills', 'timezone', 'weeks', 'timestamp']
     search_fields = ['name', 'email', 'skills__name']
 
     inlines = (StudentInLine, )  # SkillInLine (if wanting to add the Skills)
 
     fieldsets = [
-        (None, {'fields': ['name', 'email', 'info']}),
-        ('Mentorship', {'fields': ['students', 'weeks']}),
+        (None, {'fields': ['name', 'email', 'info', 'notes']}),
+        ('Mentorship', {'fields': ['status', 'students', 'weeks']}),
         ('Skills', {'fields': ['skills', 'details']}),
         ('Time Info', {'fields': ['timezone', 'daytime']}),
     ]  # omitting field 'timestamp' (for when the form was submitted)
